@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#10251d" />
+  <title>AgriSense | Smart Agriculture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">✳</span><span>Agri<span>Sense</span><small>SMART FARMING</small></span></a>
+      <div class="side-label">WORKSPACE</div>
+      <a class="nav-item active" href="#"><span>▦</span> Overview</a>
+      <a class="nav-item" href="#sensors"><span>◉</span> Sensor data</a>
+      <a class="nav-item" href="#irrigation"><span>♧</span> Irrigation</a>
+      <a class="nav-item" href="#history"><span>▤</span> Reading history</a>
+      <div class="sidebar-bottom">
+        <div class="help-card"><div class="help-icon">☀</div><b>Grow smarter.</b><p>Monitor your field and make every drop count.</p></div>
+        <div class="profile"><div class="avatar">VN</div><div><b>Farm Admin</b><small>Project dashboard</small></div><span class="dots">•••</span></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div><div class="eyebrow">FIELD MANAGEMENT / OVERVIEW</div><h1>Good day, Farmer <span>🌱</span></h1><p class="subheading">Here’s what’s happening on your farm today.</p></div>
+        <div class="top-actions"><span class="live-pill"><i></i> SYSTEM LIVE</span><button class="refresh-btn" id="refreshBtn">↻ <span>Refresh</span></button></div>
+      </header>
+
+      <section class="hero">
+        <div class="hero-copy"><div class="hero-tag">YOUR FARM AT A GLANCE</div><h2>Healthy soil.<br><em>Better harvest.</em></h2><p>Smart monitoring helps you understand your field conditions and manage irrigation efficiently.</p><a href="#sensors" class="hero-link">Explore sensor data <span>↗</span></a></div>
+        <div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="hill hill-back"></div><div class="hill hill-front"></div><div class="plant plant-one">♣</div><div class="plant plant-two">♣</div><div class="plant plant-three">♣</div><div class="field-lines"></div></div>
+      </section>
+
+      <section class="section-head" id="sensors"><div><div class="eyebrow">LIVE MONITORING</div><h2>Field conditions</h2></div><div class="updated" id="lastUpdated">Waiting for sensor data…</div></section>
+      <section class="metric-grid">
+        <article class="metric-card"><div class="metric-top"><span class="metric-icon soil">◒</span><span class="metric-label">SOIL MOISTURE</span><span class="metric-status" id="moistureStatus">—</span></div><div class="metric-value"><strong id="moisture">--</strong><span>%</span></div><div class="meter"><i id="moistureBar"></i></div><div class="metric-foot">Ideal range <b>35–65%</b></div></article>
+        <article class="metric-card"><div class="metric-top"><span class="metric-icon temp">♨</span><span class="metric-label">TEMPERATURE</span><span class="metric-status">AIR</span></div><div class="metric-value"><strong id="temperature">--</strong><span>°C</span></div><div class="metric-foot">Alert threshold <b>40°C</b></div></article>
+        <article class="metric-card"><div class="metric-top"><span class="metric-icon humidity">≋</span><span class="metric-label">HUMIDITY</span><span class="metric-status">AIR</span></div><div class="metric-value"><strong id="humidity">--</strong><span>%</span></div><div class="metric-foot">Relative air humidity</div></article>
+        <article class="metric-card"><div class="metric-top"><span class="metric-icon ph">⌁</span><span class="metric-label">SOIL pH</span><span class="metric-status">SOIL</span></div><div class="metric-value"><strong id="ph">--</strong><span class="unit-empty"></span></div><div class="metric-foot">Target range <b>6.0–7.5</b></div></article>
+        <article class="metric-card"><div class="metric-top"><span class="metric-icon light">☼</span><span class="metric-label">LIGHT LEVEL</span><span class="metric-status">LUX</span></div><div class="metric-value"><strong id="lightLevel">--</strong><span>lx</span></div><div class="metric-foot">Ambient light intensity</div></article>
+      </section>
+
+      <section class="lower-grid">
+        <article class="panel irrigation-panel" id="irrigation">
+          <div class="panel-heading"><div><div class="eyebrow">WATER MANAGEMENT</div><h2>Irrigation control</h2></div><span class="status-dot" id="pumpDot"></span></div>
+          <div class="pump-state"><div class="pump-symbol" id="pumpSymbol">◉</div><div><small>IRRIGATION STATUS</small><h3 id="pumpStatus">Checking…</h3><p id="pumpDescription">Connecting to your farm controller.</p></div></div>
+          <div class="control-row"><div><b>Control mode</b><small>Choose automatic or manual operation</small></div><div class="segmented"><button class="mode-btn selected" data-mode="auto">Auto</button><button class="mode-btn" data-mode="manual">Manual</button></div></div>
+          <div class="control-row manual-row"><div><b>Manual pump switch</b><small id="manualHint">Switch to manual mode to control the pump</small></div><button class="toggle" id="pumpToggle" aria-label="Toggle irrigation" disabled><span></span></button></div>
+          <div class="rule-note"><span>✦</span><p><b>Smart rule:</b> Auto irrigation starts when soil moisture falls below 35% or temperature rises above 40°C.</p></div>
+          <div class="notice" id="apiNotice">Connecting to the sensor server…</div>
+        </article>
+        <article class="panel chart-panel">
+          <div class="panel-heading"><div><div class="eyebrow">FIELD INSIGHTS</div><h2>Moisture trend</h2></div><span class="chart-legend"><i></i> Soil moisture</span></div>
+          <div class="chart-wrap"><canvas id="moistureChart" aria-label="Soil moisture trend chart"></canvas></div>
+          <div class="chart-foot"><span>Recent readings</span><b id="chartCount">0 points</b></div>
+        </article>
+      </section>
+
+      <section class="panel history-panel" id="history">
+        <div class="panel-heading"><div><div class="eyebrow">RECENT ACTIVITY</div><h2>Reading history</h2></div><span class="table-caption">Latest sensor readings</span></div>
+        <div class="table-scroll"><table><thead><tr><th>TIME</th><th>MOISTURE</th><th>TEMP.</th><th>HUMIDITY</th><th>pH</th><th>LIGHT</th><th>IRRIGATION</th></tr></thead><tbody id="historyBody"><tr><td colspan="7" class="empty">Waiting for readings…</td></tr></tbody></table></div>
+      </section>
+      <footer><span>✳ AgriSense</span><span>Smart Agriculture Monitoring System · Sensor values are simulated by the project server</span></footer>
+    </main>
+  </div>
+  <script src="/script.js"></script>
+</body>
+</html>
